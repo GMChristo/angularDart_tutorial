@@ -1,12 +1,11 @@
-<nav class="nav d-flex justify-content-between align-items-center">
+<nav class="nav d-flex justify-content-between align-items-center rounded py-3 mb-3">
     <li class="nav-item">
         <a class="nav-link active" href="#" >
-            <!-- <img src="../../../assets/images/logo.png" alt="logo" width="50" height="50"> -->
-            <img src="assets/images/logo.png" alt="logo" width="50" height="50">
+            <img src="assets/images/logo.png" alt="logo" width="75" height="75">
         </a>
     </li>
     <li class="nav d-flex justify-content-between align-items-center">
-        <a class="nav-link disable" href="/courses" tabindex="-1" aria-disabled="true" >Courses</a>
+        <a class="nav-link text-muted lead" [routerLink]="RoutePaths.courses.toUrl()" tabindex="-1" aria-disabled="true" >Courses</a>
         <!-- <a class="nav-link disable" href="#" tabindex="-1" aria-disabled="true">Courses</a>
         <a class="nav-link disable" href="#" tabindex="-1" aria-disabled="true">Courses</a> -->
     </li>
