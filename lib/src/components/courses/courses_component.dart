@@ -1,5 +1,6 @@
 import 'package:angular/angular.dart';
 import 'package:angularDart_tutorial/src/components/card/card_component.dart';
+import 'package:angularDart_tutorial/src/components/courses/course_service.dart';
 import 'package:angularDart_tutorial/src/model/course_model.dart';
 import 'package:angularDart_tutorial/src/utils/route_paths.dart';
 import 'package:angular_router/angular_router.dart';
@@ -11,44 +12,28 @@ import 'package:angular_router/angular_router.dart';
     coreDirectives,
     CourseCard,
   ],
-  providers: [],
+  providers: [
+    ClassProvider(CourseService),
+  ],
 )
-class CoursesComponent {
+class CoursesComponent implements OnInit{
   Course selected;
 
   final Router _router;
+  final CourseService _courseService;
 
-  CoursesComponent(this._router);
+  CoursesComponent(this._router, this._courseService);
 
-  List<Course> courses = [
-    Course(
-      '111',
-      'Javascript: the complete course',
-      'CodeReview',
-      19.99,
-      'Full understanding of Javascript ecosystem',
-      10,
-      'assets/images/1.png',
-      ['Lecture1', 'Lecture2'],
-      ['Javascript', 'programming'],
-      DateTime.now().toIso8601String(),
-    ),
-    Course(
-      '112',
-      'Javascript: the complete course',
-      'CodeReview',
-      19.99,
-      'Full understanding of Javascript ecosystem',
-      10,
-      'assets/images/2.png',
-      ['Lecture1', 'Lecture2'],
-      ['Javascript', 'programming'],
-      DateTime.now().toIso8601String(),
-    ),
-  ];
+  List<Course> courses = [];
 
   void deleteItem(String uid) {
     courses.removeWhere((course) => course.uid == uid);
+  }
+
+  @override
+  void ngOnInit() {
+    
+    courses = this._courseService.getAll();
   }
 
   Future<NavigationResult> viewDetail(Course course) {
@@ -59,4 +44,5 @@ class CoursesComponent {
   String _extractId(String uid) {
     return RoutePaths.course_detail.toUrl(parameters: {idParam: '$uid'});
   }
+
 }

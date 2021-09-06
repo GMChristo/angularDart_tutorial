@@ -13,6 +13,9 @@ class CourseCard {
   @Input('selectedCourse')
   Course course;
 
+  @Input('firstBtnTitle')
+  String firstBtnTitle;
+
   final StreamController _deleteCtrl = StreamController();
   final StreamController _viewDetailCtrl = StreamController();
 
