@@ -40,8 +40,8 @@ class CourseService {
     return _courses.firstWhere((course) => course.uid == uid, orElse: () => throw StateError('id param is not found or unknown'),);
   }
 
-  void deleteCourse(Course course){
-    this._courses.remove(course);
+  void deleteCourse(String uid){
+    this._courses.removeWhere((course) => course.uid == uid);
   }
 
   void enroll(Course course){

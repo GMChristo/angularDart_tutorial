@@ -27,12 +27,11 @@ class CoursesComponent implements OnInit{
   List<Course> courses = [];
 
   void deleteItem(String uid) {
-    courses.removeWhere((course) => course.uid == uid);
+    this._courseService.deleteCourse(uid);
   }
 
   @override
   void ngOnInit() {
-    
     courses = this._courseService.getAll();
   }
 

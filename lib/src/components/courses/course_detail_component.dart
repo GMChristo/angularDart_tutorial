@@ -44,8 +44,8 @@ class CourseDetail implements OnActivate{
   }
 
   void deleteCourse() {
-    this._courseService.deleteCourse(selected);
-    this._location.back();
+    _courseService.deleteCourse(selected.uid);
+    _location.back();
   }
 
   void enrollCourse() {
