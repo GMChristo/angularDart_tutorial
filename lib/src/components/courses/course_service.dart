@@ -41,7 +41,18 @@ class CourseService {
   }
 
   void deleteCourse(String uid){
+    // for (var c in _courses) {
+      // if(c.uid == uid){
+        // print('c ${c.uid} == uid $uid');
+      // }else{
+        // print('c ${c.uid} != uid $uid');
+      // }
+    // }
+    // print('courses antes removeWhere: ');
+    // _courses.forEach((e) => print(e.toString()));
     this._courses.removeWhere((course) => course.uid == uid);
+    // print('courses depois removeWhere: ');
+    // _courses.forEach((e) => print(e.toString()));
   }
 
   void enroll(Course course){

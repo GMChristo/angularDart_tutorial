@@ -31,8 +31,13 @@ class CoursesComponent implements OnInit{
   }
 
   @override
-  void ngOnInit() {
-    courses = this._courseService.getAll();
+  void ngOnInit() async {
+    // print('ngOnInit() antes get all courses_component');
+    // courses.forEach((e) => print(e.toString()));
+    courses = _courseService.getAll();
+    //ao deletar um card via details a lista esta sendo toda preenchida
+    // print('ngOnInit() depois get all courses_component');
+    // courses.forEach((e) => print(e.toString()));
   }
 
   Future<NavigationResult> viewDetail(Course course) {

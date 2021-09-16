@@ -44,7 +44,14 @@ class CourseDetail implements OnActivate{
   }
 
   void deleteCourse() {
+    // print('deleteCourse() detail - ${selected.uid}');
+    var lalala2 = _courseService.getAll();
+    print('deleteCourse() detail_component antes');
+    print(lalala2);
     _courseService.deleteCourse(selected.uid);
+    var lalala = _courseService.getAll();
+    print('deleteCourse() detail_component');
+    print(lalala);
     _location.back();
   }
 

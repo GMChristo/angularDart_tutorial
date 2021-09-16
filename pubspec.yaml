@@ -2,13 +2,13 @@ name: angularDart_tutorial
 description: A web app that uses AngularDart Components
 # version: 1.0.0
 # homepage: https://www.example.com
-
 environment:
   sdk: '>=2.10.0 <3.0.0'
 
 dependencies:
   angular: ^6.0.0
   angular_components: ^1.0.2
+  angular_forms: ^3.0.0
   angular_router: ^2.0.0-alpha+21
 
 dev_dependencies:

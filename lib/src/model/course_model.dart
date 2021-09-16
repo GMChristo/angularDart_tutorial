@@ -10,21 +10,21 @@ class Course {
   double price;
   String author;
 
-
   Course(
     this.uid,
     this.title,
     this.author,
     this.price,
+    [
     this.description,
     this.duration,
     this.image,
     this.lectures,
     this.tags,
     this.updateAt,
-  );
+  ]);
 
-  String toString(){
+  String toString() {
     return '$uid => $title';
   }
 }
