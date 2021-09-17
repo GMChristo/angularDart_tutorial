@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:angularDart_tutorial/src/model/course_model.dart';
 import 'package:http/http.dart';
 import 'package:http/testing.dart';
@@ -32,9 +34,9 @@ final tags = <List<String>>[
 
 class InMemoryData extends MockClient {
   static final uuid = Uuid();
-  static List<Course>_coursesDB;
+  static List<Course> _coursesDB;
 
-  InMemoryData(MockClientHandler fn) : super(fn);
+  InMemoryData() : super(_handler);
   static List<Map<String, dynamic>> _initialCourses() {
     List<Map<String, dynamic>> mockJson;
     for (var i = 0; i > 10; i++) {
@@ -54,10 +56,65 @@ class InMemoryData extends MockClient {
     return mockJson;
   }
 
-  static Future<Response>_handler(Request request) async {
+  static Future<Response> _handler(Request request) async {
+    if (_coursesDB == null) resetDb();
+    var data;
 
+    switch (request.method) {
+      case 'GET':
+        final uid = request.url.pathSegments.last;
+        if (uid != null && uid != 'courses' && uid.isNotEmpty) {
+          data = _coursesDB.firstWhere((el) => (el.uid == uid));
+        } else {
+          String prefix = request.url.queryParameters['title'] ?? '';
+          final reqExp = RegExp(prefix, caseSensitive: false);
+
+          data = _coursesDB
+              .where(
+                (el) => (el.title.contains(reqExp)),
+              )
+              .toList();
+        }
+        break;
+
+      case 'POST':
+        var title = json.decode(request.body)['title'];
+        var price = json.decode(request.body)['price'];
+        var author = json.decode(request.body)['author'];
+        var course = Course(uuid.v4(), title, author, price);
+
+        _coursesDB.add(course);
+        data = course;
+        break;
+
+      case 'PUT':
+        var courseChanges = Course.fromJson(
+          json.decode(request.body),
+        );
+
+        var targetCourse = _coursesDB.firstWhere(
+          (cr) => (cr.uid == courseChanges.uid),
+        );
+
+        targetCourse.title = courseChanges.title;
+        data = targetCourse;
+        break;
+
+      case 'DELETE':
+        var uid = request.url.pathSegments.last;
+        _coursesDB.removeWhere((el) => el.uid == uid);
+        data = _coursesDB;
+        break;
+      
+      default:
+        throw 'Unimplemented HTTP method ${request.method}';
+    }
+
+    return Response(json.encode({'data': data}), 200, headers: {'Content-Type': 'application/json'},);
   }
-  static resetDb(){
-    _coursesDB = _initialCourses().map((json) => Course.fromJson(json)).toList();
+
+  static resetDb() {
+    _coursesDB =
+        _initialCourses().map((json) => Course.fromJson(json)).toList();
   }
 }
