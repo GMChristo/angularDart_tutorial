@@ -1,5 +1,6 @@
 import 'package:angular/angular.dart';
 import 'package:angularDart_tutorial/src/components/profile/profile_service.dart';
+import 'package:angularDart_tutorial/src/model/profile_model.dart';
 import 'package:angular_forms/angular_forms.dart';
 import 'package:angular_router/angular_router.dart';
 
