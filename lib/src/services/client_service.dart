@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:angular/angular.dart';
 import 'package:angularDart_tutorial/src/model/course_model.dart';
 import 'package:angularDart_tutorial/src/services/helper_service.dart';
@@ -13,10 +15,10 @@ class ClientService extends HelperService {
 
   //get all
   Future<List<Course>> getAll() async {
+    print('getAll Client_service');
     try {
       final res = await _client.get(_base, headers: _headers);
-      var courses;
-      return courses = (extractData(res) as List)
+      return (extractData(res) as List)
           .map((json) => Course.fromJson(json))
           .toList();
     } catch (e) {
@@ -32,6 +34,48 @@ class ClientService extends HelperService {
     } catch (e) {
       throw simplifyError(e);
     }
-    ;
+  }
+
+  Future<Course> createCourse(
+    String title,
+    String author,
+    double price,
+  ) async {
+    try {
+      final res = await _client.post(
+        _base,
+        headers: _headers,
+        body: json.encode({
+          'title': title,
+          'author': author,
+          'price': price,
+        }),
+      );
+      return Course.fromJson(extractData(res));
+    } catch (e) {
+      throw simplifyError(e);
+    }
+  }
+
+  Future<Response> deleteCourse(String uid) async {
+    try{
+      final url = '$_base/$uid';
+    }catch(e){
+      throw simplifyError(e);
+    }
+  }
+
+  Future<Course> updateCourse(Course course) async {
+    try{
+      final url = '$_base/${course.uid}';
+      final res = await _client.put(
+        url,
+        headers: _headers,
+        body: json.encode(course),
+      );
+      return Course.fromJson(extractData(res));
+    }catch(e){
+      throw simplifyError(e);
+    }
   }
 }

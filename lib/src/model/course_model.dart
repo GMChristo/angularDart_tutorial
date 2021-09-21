@@ -3,7 +3,7 @@ class Course {
   String title;
   String description;
   String image;
-  List<String> tags;
+  List<dynamic> tags;
   String updateAt;
   List<dynamic> lectures;
   double duration;

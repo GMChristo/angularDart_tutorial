@@ -36,10 +36,10 @@ class CourseDetail implements OnActivate{
 
   CourseDetail(this._courseService,  this._location);
   @override
-  void onActivate(RouterState previous, RouterState current) {
+  void onActivate(RouterState previous, RouterState current) async {
     final uid = getId(current.parameters);
     if (uid != null) {
-      selected = _courseService.getSingleCourse(uid);
+      selected = await _courseService.getSingle(uid);
     }
   }
 

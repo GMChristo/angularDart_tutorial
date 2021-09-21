@@ -16,28 +16,32 @@ import 'package:angular_router/angular_router.dart';
     ClassProvider(CourseService),
   ],
 )
-class CoursesComponent implements OnInit{
+class CoursesComponent implements OnInit {
   Course selected;
 
   final Router _router;
   final CourseService _courseService;
 
   CoursesComponent(this._router, this._courseService);
-
   List<Course> courses = [];
 
-  void deleteItem(String uid) {
-    this._courseService.deleteCourse(uid);
+  void deleteItem(String uid) async {
+    var course = this.courses.firstWhere((cr) => cr.uid == uid);
+    if (selected == course) {
+      selected = null;
+    }
+    await this._courseService.deleteCourse(uid);
+    this.courses.removeWhere((element) => element.uid == uid);
   }
 
   @override
   void ngOnInit() async {
     // print('ngOnInit() antes get all courses_component');
     // courses.forEach((e) => print(e.toString()));
-    courses = _courseService.getAll();
+    courses = await _courseService.getAll();
     //ao deletar um card via details a lista esta sendo toda preenchida
     // print('ngOnInit() depois get all courses_component');
-    // courses.forEach((e) => print(e.toString()));
+    courses.forEach((e) => print(e.toString()));
   }
 
   Future<NavigationResult> viewDetail(Course course) {
@@ -48,5 +52,4 @@ class CoursesComponent implements OnInit{
   String _extractId(String uid) {
     return RoutePaths.course_detail.toUrl(parameters: {idParam: '$uid'});
   }
-
 }

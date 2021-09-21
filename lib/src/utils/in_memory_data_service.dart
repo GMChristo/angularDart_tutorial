@@ -38,7 +38,7 @@ class InMemoryData extends MockClient {
 
   InMemoryData() : super(_handler);
   static List<Map<String, dynamic>> _initialCourses() {
-    List<Map<String, dynamic>> mockJson;
+    var mockJson = <Map<String, dynamic>> [];
     for (var i = 0; i > 10; i++) {
       mockJson.add({
         'uid': uuid.v4(),
@@ -47,7 +47,7 @@ class InMemoryData extends MockClient {
         'price': 0,
         'description': 'Full complete course',
         'duration': 2.2,
-        'image': '',
+        'image': 'https://tinyurl.com/yy2s9ntd',
         'lectures': ['Lecture1', 'Lecture2'],
         'tegs': tags[i],
         'updateAt': DateFormat('dd/MM/yyyy').format(DateTime.now()),
